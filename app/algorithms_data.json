@@ -1,0 +1,499 @@
+{
+  "summary": {
+    "total_algorithms": 22,
+    "tracks": [
+      "Regression",
+      "Classification",
+      "Clustering"
+    ],
+    "counts": {
+      "Regression": 10,
+      "Classification": 10,
+      "Clustering": 2
+    }
+  },
+  "algorithms": [
+    {
+      "id": "reg_1",
+      "name": "Linear Regression (OLS)",
+      "track": "Regression",
+      "number": 1,
+      "rank": 7,
+      "best_params": "N/A (Standard Ordinary Least Squares)",
+      "metrics": {
+        "Tuned R2": 0.8158,
+        "Baseline R2": 0.8158,
+        "RMSE (kW)": 3050.13,
+        "MAE (kW)": 2466.18,
+        "5-fold CV R2": "N/A",
+        "Fit Time (s)": 0.01
+      },
+      "loss_function_name": "Ordinary Least Squares Residual Sum of Squares (RSS)",
+      "loss_latex": "J(\\beta) = \\frac{1}{2n} \\|y - X\\beta\\|_2^2 = \\frac{1}{2n} \\sum_{i=1}^n \\left(y_i - x_i^T\\beta\\right)^2",
+      "prediction_function_name": "Linear Combination of Feature Inputs",
+      "prediction_latex": "\\hat{y}(x) = x^T \\hat{\\beta} = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_1 + \\dots + \\hat{\\beta}_p x_p, \\quad \\hat{\\beta} = (X^T X)^{-1} X^T y",
+      "description": "Baseline linear parametric model assuming gaussian homoscedastic errors. Fast closed-form solution.",
+      "dataset": "Tetouan City Power Consumption (PowerConsumption_Zone1)"
+    },
+    {
+      "id": "reg_2",
+      "name": "Ridge Regression (L2 Regularization)",
+      "track": "Regression",
+      "number": 2,
+      "rank": 7,
+      "best_params": "{'alpha': 1.0, 'solver': 'auto'}",
+      "metrics": {
+        "Tuned R2": 0.8158,
+        "Baseline R2": 0.8158,
+        "RMSE (kW)": 3050.13,
+        "MAE (kW)": 2466.18,
+        "5-fold CV R2": "N/A",
+        "Fit Time (s)": 3.39
+      },
+      "loss_function_name": "Ridge Loss (Tikhonov L2 Regularization)",
+      "loss_latex": "J(\\beta) = \\frac{1}{2n} \\|y - X\\beta\\|_2^2 + \\frac{\\alpha}{2} \\|\\beta\\|_2^2 = \\frac{1}{2n}\\sum_{i=1}^n (y_i - x_i^T\\beta)^2 + \\frac{\\alpha}{2}\\sum_{j=1}^p \\beta_j^2",
+      "prediction_function_name": "L2-Regularized Linear Predictor",
+      "prediction_latex": "\\hat{y}(x) = x^T \\hat{\\beta}_{\\text{ridge}}, \\quad \\hat{\\beta}_{\\text{ridge}} = (X^T X + \\alpha I)^{-1} X^T y",
+      "description": "Shrinks coefficients smoothly toward zero to control multicollinearity among climate sensors.",
+      "dataset": "Tetouan City Power Consumption (PowerConsumption_Zone1)"
+    },
+    {
+      "id": "reg_3",
+      "name": "Lasso Regression (L1 Regularization)",
+      "track": "Regression",
+      "number": 3,
+      "rank": 7,
+      "best_params": "{'alpha': 1.0, 'max_iter': 5000}",
+      "metrics": {
+        "Tuned R2": 0.8158,
+        "Baseline R2": 0.8158,
+        "RMSE (kW)": 3050.14,
+        "MAE (kW)": 2466.39,
+        "5-fold CV R2": "N/A",
+        "Fit Time (s)": 0.27
+      },
+      "loss_function_name": "Lasso Loss (L1 Sparsity Penalty)",
+      "loss_latex": "J(\\beta) = \\frac{1}{2n} \\|y - X\\beta\\|_2^2 + \\alpha \\|\\beta\\|_1 = \\frac{1}{2n}\\sum_{i=1}^n (y_i - x_i^T\\beta)^2 + \\alpha \\sum_{j=1}^p |\\beta_j|",
+      "prediction_function_name": "Sparse Linear Predictor (Coordinate Descent)",
+      "prediction_latex": "\\hat{y}(x) = x^T \\hat{\\beta}_{\\text{lasso}}, \\quad \\hat{\\beta}_j = S\\left(\\frac{1}{n}\\sum_{i=1}^n x_{ij}(y_i - \\tilde{y}_i^{(j)}), \\alpha\\right)",
+      "description": "Induces sparsity by driving uninformative sensor weights to exact zero using coordinate descent.",
+      "dataset": "Tetouan City Power Consumption (PowerConsumption_Zone1)"
+    },
+    {
+      "id": "reg_4",
+      "name": "ElasticNet Regression",
+      "track": "Regression",
+      "number": 4,
+      "rank": 8,
+      "best_params": "{'alpha': 0.01, 'l1_ratio': 0.7}",
+      "metrics": {
+        "Tuned R2": 0.8157,
+        "Baseline R2": 0.763,
+        "RMSE (kW)": 3050.27,
+        "MAE (kW)": 2466.57,
+        "5-fold CV R2": "N/A",
+        "Fit Time (s)": 0.41
+      },
+      "loss_function_name": "ElasticNet Convex Combination Loss",
+      "loss_latex": "J(\\beta) = \\frac{1}{2n}\\|y - X\\beta\\|_2^2 + \\alpha \\rho \\|\\beta\\|_1 + \\frac{\\alpha(1-\\rho)}{2}\\|\\beta\\|_2^2, \\quad \\rho = \\text{l1\\_ratio}",
+      "prediction_function_name": "ElasticNet Predictor",
+      "prediction_latex": "\\hat{y}(x) = x^T \\hat{\\beta}_{\\text{enet}}",
+      "description": "Combines L1 feature selection and L2 grouping for correlated meteorological indicators.",
+      "dataset": "Tetouan City Power Consumption (PowerConsumption_Zone1)"
+    },
+    {
+      "id": "reg_5",
+      "name": "Polynomial Regression (Degree 2)",
+      "track": "Regression",
+      "number": 5,
+      "rank": 5,
+      "best_params": "Degree = 2 Polynomial Feature Expansion",
+      "metrics": {
+        "Tuned R2": 0.8961,
+        "Baseline R2": 0.8961,
+        "RMSE (kW)": 2290.96,
+        "MAE (kW)": 1733.25,
+        "5-fold CV R2": "N/A",
+        "Fit Time (s)": 0.05
+      },
+      "loss_function_name": "Least Squares over Expanded Polynomial Basis",
+      "loss_latex": "J(\\beta) = \\frac{1}{2n} \\|y - \\Phi(X)\\beta\\|_2^2, \\quad \\Phi(x) = [1, x_1, \\dots, x_p, x_1^2, x_1 x_2, \\dots, x_p^2]",
+      "prediction_function_name": "Quadratic Basis Predictor",
+      "prediction_latex": "\\hat{y}(x) = \\beta_0 + \\sum_{j=1}^p \\beta_j x_j + \\sum_{j=1}^p \\beta_{jj} x_j^2 + \\sum_{j < k} \\beta_{jk} x_j x_k",
+      "description": "Models non-linear air conditioning thermal response (+8.03% R2 gain over simple linear).",
+      "dataset": "Tetouan City Power Consumption (PowerConsumption_Zone1)"
+    },
+    {
+      "id": "reg_6",
+      "name": "Decision Tree Regressor",
+      "track": "Regression",
+      "number": 6,
+      "rank": 4,
+      "best_params": "{'max_depth': 12, 'min_samples_split': 5}",
+      "metrics": {
+        "Tuned R2": 0.9513,
+        "Baseline R2": 0.9522,
+        "RMSE (kW)": 1567.65,
+        "MAE (kW)": 1025.92,
+        "5-fold CV R2": "N/A",
+        "Fit Time (s)": 5.41
+      },
+      "loss_function_name": "Mean Squared Error (MSE) Node Impurity Criterion",
+      "loss_latex": "\\text{MSE}(R_m) = \\frac{1}{N_m}\\sum_{i \\in R_m}(y_i - \\bar{y}_{R_m})^2, \\quad \\bar{y}_{R_m} = \\frac{1}{N_m}\\sum_{i \\in R_m} y_i",
+      "prediction_function_name": "Piecewise Constant Leaf Region Average",
+      "prediction_latex": "\\hat{y}(x) = \\sum_{m=1}^M \\bar{y}_{R_m} \\cdot \\mathbb{I}(x \\in R_m)",
+      "description": "Recursive binary splitting into orthogonal hyper-rectangles with leaf regional averages.",
+      "dataset": "Tetouan City Power Consumption (PowerConsumption_Zone1)"
+    },
+    {
+      "id": "reg_7",
+      "name": "Random Forest Regressor",
+      "track": "Regression",
+      "number": 7,
+      "rank": 2,
+      "best_params": "{'max_depth': 20, 'n_estimators': 150}",
+      "metrics": {
+        "Tuned R2": 0.9781,
+        "Baseline R2": 0.9781,
+        "RMSE (kW)": 1052.09,
+        "MAE (kW)": 677.83,
+        "5-fold CV R2": "0.7441 \u00b1 0.22",
+        "Fit Time (s)": 111.75
+      },
+      "loss_function_name": "Aggregated Bootstrap Mean Squared Error",
+      "loss_latex": "J(B) = \\frac{1}{B}\\sum_{b=1}^B \\sum_{m=1}^{M_b} \\text{MSE}(R_{m,b})",
+      "prediction_function_name": "Ensemble Forest Bagging Average",
+      "prediction_latex": "\\hat{y}(x) = \\frac{1}{B}\\sum_{b=1}^B T_b(x; \\Theta_b)",
+      "description": "Bagging ensemble of 150 decorrelated trees with random subspace feature sampling.",
+      "dataset": "Tetouan City Power Consumption (PowerConsumption_Zone1)"
+    },
+    {
+      "id": "reg_8",
+      "name": "Gradient Boosting Regressor",
+      "track": "Regression",
+      "number": 8,
+      "rank": 3,
+      "best_params": "{'learning_rate': 0.1, 'max_depth': 6, 'n_estimators': 200}",
+      "metrics": {
+        "Tuned R2": 0.9654,
+        "Baseline R2": 0.9291,
+        "RMSE (kW)": 1321.2,
+        "MAE (kW)": 936.41,
+        "5-fold CV R2": "N/A",
+        "Fit Time (s)": 122.39
+      },
+      "loss_function_name": "Squared Error Loss Gradient Descent in Function Space",
+      "loss_latex": "L(y, F(x)) = \\frac{1}{2}(y - F(x))^2, \\quad r_{im} = -\\left[\\frac{\\partial L(y_i, F(x_i))}{\\partial F(x_i)}\\right]_{F_{m-1}} = y_i - F_{m-1}(x_i)",
+      "prediction_function_name": "Additive Boosted Staged Predictor",
+      "prediction_latex": "\\hat{y}(x) = F_M(x) = F_0(x) + \\sum_{m=1}^M \\nu \\cdot h_m(x; \\Theta_m), \\quad \\nu = \\text{learning\\_rate}",
+      "description": "Stage-wise sequential gradient boosting fitting shallow regression trees to pseudo-residuals.",
+      "dataset": "Tetouan City Power Consumption (PowerConsumption_Zone1)"
+    },
+    {
+      "id": "reg_9",
+      "name": "Support Vector Regressor (SVR)",
+      "track": "Regression",
+      "number": 9,
+      "rank": 6,
+      "best_params": "{'C': 10.0, 'kernel': 'rbf'}",
+      "metrics": {
+        "Tuned R2": 0.8648,
+        "Baseline R2": 0.5272,
+        "RMSE (kW)": 2612.8,
+        "MAE (kW)": 1949.37,
+        "5-fold CV R2": "N/A",
+        "Fit Time (s)": 253.73
+      },
+      "loss_function_name": "Epsilon-Insensitive Loss with L2 Regularization",
+      "loss_latex": "\\min_{w, b, \\xi, \\xi^*} \\frac{1}{2}\\|w\\|^2 + C\\sum_{i=1}^n(\\xi_i + \\xi_i^*), \\quad \\text{s.t. } |y_i - (w^T\\phi(x_i) + b)| \\le \\epsilon + \\xi_i^{(*)}",
+      "prediction_function_name": "Non-Linear Dual Kernel Support Vector Predictor",
+      "prediction_latex": "\\hat{y}(x) = \\sum_{i=1}^n (\\alpha_i - \\alpha_i^*) K(x_i, x) + b, \\quad K(x_i, x) = \\exp(-\\gamma \\|x_i - x\\|^2)",
+      "description": "Tuned penalty C=10 boosted R2 from 0.5272 to 0.8648 (+33.76% boost).",
+      "dataset": "Tetouan City Power Consumption (PowerConsumption_Zone1)"
+    },
+    {
+      "id": "reg_10",
+      "name": "K-Nearest Neighbors Regressor",
+      "track": "Regression",
+      "number": 10,
+      "rank": 1,
+      "best_params": "{'n_neighbors': 5, 'weights': 'distance'}",
+      "metrics": {
+        "Tuned R2": 0.984,
+        "Baseline R2": 0.9802,
+        "RMSE (kW)": 897.6,
+        "MAE (kW)": 545.82,
+        "5-fold CV R2": "0.7007 \u00b1 0.23",
+        "Fit Time (s)": 1.6
+      },
+      "loss_function_name": "Distance-Weighted Reconstruction Error",
+      "loss_latex": "J(x) = \\sum_{i \\in N_k(x)} w_i (y_i - \\hat{y}(x))^2, \\quad w_i = \\frac{1}{d(x, x_i)}",
+      "prediction_function_name": "Inverse Distance-Weighted Local Interpolator",
+      "prediction_latex": "\\hat{y}(x) = \\frac{\\sum_{i \\in N_k(x)} \\frac{1}{d(x, x_i)} y_i}{\\sum_{i \\in N_k(x)} \\frac{1}{d(x, x_i)}}",
+      "description": "Rank 1 regression model with R2 = 0.9840 due to smooth power grid load curves.",
+      "dataset": "Tetouan City Power Consumption (PowerConsumption_Zone1)"
+    },
+    {
+      "id": "clf_1",
+      "name": "Logistic Regression (Multinomial)",
+      "track": "Classification",
+      "number": 1,
+      "rank": 8,
+      "best_params": "{'C': 0.01, 'solver': 'lbfgs'}",
+      "metrics": {
+        "Accuracy": 0.8458,
+        "Precision (w)": 0.7153,
+        "Recall (w)": 0.8458,
+        "F1-Score (w)": 0.7751,
+        "ROC-AUC (OvR)": 0.5801,
+        "Fit Time (s)": 3.86
+      },
+      "loss_function_name": "Categorical Cross-Entropy (Multinomial Log-Loss)",
+      "loss_latex": "J(W) = -\\frac{1}{n}\\sum_{i=1}^n \\sum_{c=1}^C y_{ic} \\log P(Y=c \\mid x_i) + \\frac{1}{2C_{\\text{reg}}}\\|W\\|_F^2",
+      "prediction_function_name": "Softmax Multi-Class Probability Maximization",
+      "prediction_latex": "P(Y=c \\mid x) = \\frac{\\exp(w_c^T x + b_c)}{\\sum_{k=1}^C \\exp(w_k^T x + b_k)}, \\quad \\hat{y} = \\arg\\max_c P(Y=c \\mid x)",
+      "description": "Baseline linear classifier mapping log-odds via softmax. Prone to majority class dominance.",
+      "dataset": "Addis Ababa Road Traffic Accident (Accident_severity)"
+    },
+    {
+      "id": "clf_2",
+      "name": "K-Nearest Neighbors Classifier",
+      "track": "Classification",
+      "number": 2,
+      "rank": 7,
+      "best_params": "{'n_neighbors': 7, 'weights': 'distance'}",
+      "metrics": {
+        "Accuracy": 0.8377,
+        "Precision (w)": 0.7431,
+        "Recall (w)": 0.8377,
+        "F1-Score (w)": 0.7753,
+        "ROC-AUC (OvR)": 0.5615,
+        "Fit Time (s)": 0.74
+      },
+      "loss_function_name": "Zero-One Misclassification Loss over Local Neighborhood",
+      "loss_latex": "L_{0-1} = \\frac{1}{n}\\sum_{i=1}^n \\mathbb{I}(y_i \\ne \\hat{y}_i)",
+      "prediction_function_name": "Inverse Distance-Weighted Plurality Vote",
+      "prediction_latex": "\\hat{y}(x) = \\arg\\max_{c \\in \\{0, 1, 2\\}} \\sum_{i \\in N_k(x)} \\frac{1}{d(x, x_i)} \\mathbb{I}(y_i = c)",
+      "description": "Non-parametric distance-based classifier operating in standardized Euclidean space.",
+      "dataset": "Addis Ababa Road Traffic Accident (Accident_severity)"
+    },
+    {
+      "id": "clf_3",
+      "name": "Gaussian Naive Bayes",
+      "track": "Classification",
+      "number": 3,
+      "rank": 10,
+      "best_params": "{'var_smoothing': 1e-06}",
+      "metrics": {
+        "Accuracy": 0.8141,
+        "Precision (w)": 0.7323,
+        "Recall (w)": 0.8141,
+        "F1-Score (w)": 0.7648,
+        "ROC-AUC (OvR)": 0.5648,
+        "Fit Time (s)": 0.22
+      },
+      "loss_function_name": "Negative Log-Likelihood under Conditional Independence",
+      "loss_latex": "\\text{NLL} = -\\sum_{i=1}^n \\left( \\log P(y_i) + \\sum_{j=1}^p \\log \\mathcal{N}(x_{ij}; \\mu_{y_i, j}, \\sigma_{y_i, j}^2 + \\epsilon) \\right)",
+      "prediction_function_name": "Maximum A Posteriori (MAP) Decision Rule",
+      "prediction_latex": "\\hat{y} = \\arg\\max_c \\left[ \\log P(Y=c) - \\frac{1}{2}\\sum_{j=1}^p \\left( \\log(2\\pi\\sigma_{cj}^2) + \\frac{(x_j - \\mu_{cj})^2}{\\sigma_{cj}^2} \\right) \\right]",
+      "description": "Fits class-conditional normal distributions under strict conditional independence assumption.",
+      "dataset": "Addis Ababa Road Traffic Accident (Accident_severity)"
+    },
+    {
+      "id": "clf_4",
+      "name": "Decision Tree Classifier",
+      "track": "Classification",
+      "number": 4,
+      "rank": 2,
+      "best_params": "{'criterion': 'gini', 'max_depth': 8, 'min_samples_split': 5}",
+      "metrics": {
+        "Accuracy": 0.8429,
+        "Precision (w)": 0.7935,
+        "Recall (w)": 0.8429,
+        "F1-Score (w)": 0.7959,
+        "ROC-AUC (OvR)": 0.6175,
+        "Fit Time (s)": 0.79
+      },
+      "loss_function_name": "Gini Impurity Metric",
+      "loss_latex": "I_G(t) = 1 - \\sum_{c=1}^C p(c \\mid t)^2, \\quad \\Delta I_G = I_G(t) - \\frac{N_L}{N}I_G(t_L) - \\frac{N_R}{N}I_G(t_R)",
+      "prediction_function_name": "Leaf Node Majority Probability",
+      "prediction_latex": "\\hat{y}(x) = \\arg\\max_c p(c \\mid R_m(x)), \\quad p(c \\mid R_m) = \\frac{1}{N_m}\\sum_{i \\in R_m}\\mathbb{I}(y_i = c)",
+      "description": "Tuned max_depth=8 prevents overfitting while capturing critical non-linear crash interactions.",
+      "dataset": "Addis Ababa Road Traffic Accident (Accident_severity)"
+    },
+    {
+      "id": "clf_5",
+      "name": "Support Vector Machine (SVC)",
+      "track": "Classification",
+      "number": 5,
+      "rank": 3,
+      "best_params": "{'C': 10, 'kernel': 'rbf'}",
+      "metrics": {
+        "Accuracy": 0.8287,
+        "Precision (w)": 0.7709,
+        "Recall (w)": 0.8287,
+        "F1-Score (w)": 0.7883,
+        "ROC-AUC (OvR)": 0.5734,
+        "Fit Time (s)": 93.99
+      },
+      "loss_function_name": "One-vs-Rest Soft Margin Hinge Loss",
+      "loss_latex": "\\min_{w_c, b_c, \\xi_c} \\frac{1}{2}\\|w_c\\|^2 + C\\sum_{i=1}^n \\xi_{ic}, \\quad \\text{s.t. } y_{ic}(w_c^T\\phi(x_i) + b_c) \\ge 1 - \\xi_{ic}",
+      "prediction_function_name": "RBF Kernel Decision Hyperplane",
+      "prediction_latex": "\\hat{y}(x) = \\arg\\max_c \\left(\\sum_{i=1}^n \\alpha_{ic} y_{ic} K(x_i, x) + b_c\\right), \\quad K(x_i, x) = \\exp(-\\gamma\\|x_i - x\\|^2)",
+      "description": "Finds maximal separating hyperplanes in RKHS infinite-dimensional feature space.",
+      "dataset": "Addis Ababa Road Traffic Accident (Accident_severity)"
+    },
+    {
+      "id": "clf_6",
+      "name": "Random Forest Classifier",
+      "track": "Classification",
+      "number": 6,
+      "rank": 5,
+      "best_params": "{'n_estimators': 200, 'max_depth': None, 'min_samples_split': 2}",
+      "metrics": {
+        "Accuracy": 0.8474,
+        "Precision (w)": 0.8581,
+        "Recall (w)": 0.8474,
+        "F1-Score (w)": 0.779,
+        "ROC-AUC (OvR)": 0.6439,
+        "Fit Time (s)": 13.29
+      },
+      "loss_function_name": "Bootstrap Forest Gini Impurity",
+      "loss_latex": "J(B) = \\frac{1}{B}\\sum_{b=1}^B \\sum_{t \\in T_b} I_G(t)",
+      "prediction_function_name": "Forest Bagging Probability Averaging",
+      "prediction_latex": "P(Y=c \\mid x) = \\frac{1}{B}\\sum_{b=1}^B P_b(Y=c \\mid x), \\quad \\hat{y} = \\arg\\max_c P(Y=c \\mid x)",
+      "description": "Bagging ensemble of 200 decision trees. High precision (0.8581) with low variance.",
+      "dataset": "Addis Ababa Road Traffic Accident (Accident_severity)"
+    },
+    {
+      "id": "clf_7",
+      "name": "AdaBoost Classifier",
+      "track": "Classification",
+      "number": 7,
+      "rank": 9,
+      "best_params": "{'learning_rate': 1.0, 'n_estimators': 50}",
+      "metrics": {
+        "Accuracy": 0.8458,
+        "Precision (w)": 0.7153,
+        "Recall (w)": 0.8458,
+        "F1-Score (w)": 0.7751,
+        "ROC-AUC (OvR)": 0.6171,
+        "Fit Time (s)": 6.22
+      },
+      "loss_function_name": "Multi-Class Exponential Loss (SAMME)",
+      "loss_latex": "L_{\\text{exp}} = \\sum_{i=1}^n \\exp\\left(-\\frac{C-1}{C} y_i^T f(x_i)\\right)",
+      "prediction_function_name": "Weighted Weak Learner Voting",
+      "prediction_latex": "\\hat{y}(x) = \\arg\\max_c \\sum_{m=1}^M \\alpha_m \\mathbb{I}(T_m(x) = c), \\quad \\alpha_m = \\log\\frac{1 - \\text{err}_m}{\\text{err}_m} + \\log(C - 1)",
+      "description": "Adaptive boosting reweighting misclassified samples across sequential iterations.",
+      "dataset": "Addis Ababa Road Traffic Accident (Accident_severity)"
+    },
+    {
+      "id": "clf_8",
+      "name": "Gradient Boosting Classifier (GBM)",
+      "track": "Classification",
+      "number": 8,
+      "rank": 1,
+      "best_params": "{'learning_rate': 0.1, 'max_depth': 5, 'n_estimators': 150}",
+      "metrics": {
+        "Accuracy": 0.8527,
+        "Precision (w)": 0.8253,
+        "Recall (w)": 0.8527,
+        "F1-Score (w)": 0.8019,
+        "ROC-AUC (OvR)": 0.6814,
+        "Fit Time (s)": 41.49
+      },
+      "loss_function_name": "Multinomial Deviance (Multi-Class Log-Loss)",
+      "loss_latex": "L(\\{y_c\\}, \\{F_c\\}) = -\\sum_{c=1}^C y_c \\log p_c(x), \\quad r_{icm} = y_{ic} - p_c(x_i)",
+      "prediction_function_name": "Softmax Staged Additive Score",
+      "prediction_latex": "p_c(x) = \\frac{\\exp(F_{c,M}(x))}{\\sum_{k=1}^C \\exp(F_{k,M}(x))}, \\quad \\hat{y} = \\arg\\max_c F_{c,M}(x)",
+      "description": "Selected Rank 1 winning model across all 10 algorithms with F1=0.8019 and ROC-AUC=0.6814.",
+      "dataset": "Addis Ababa Road Traffic Accident (Accident_severity)"
+    },
+    {
+      "id": "clf_9",
+      "name": "Bagging Classifier (Decision Tree Base)",
+      "track": "Classification",
+      "number": 9,
+      "rank": 4,
+      "best_params": "{'n_estimators': 50, 'max_samples': 1.0, 'max_features': 1.0}",
+      "metrics": {
+        "Accuracy": 0.8498,
+        "Precision (w)": 0.8219,
+        "Recall (w)": 0.8498,
+        "F1-Score (w)": 0.7871,
+        "ROC-AUC (OvR)": 0.683,
+        "Fit Time (s)": 8.7
+      },
+      "loss_function_name": "Bootstrap Aggregation 0-1 Risk",
+      "loss_latex": "R_{\\text{bag}} = \\frac{1}{B}\\sum_{b=1}^B \\mathbb{E}_{(x, y)}\\left[\\mathbb{I}(y \\ne T_b(x))\\right]",
+      "prediction_function_name": "Bootstrap Majority Vote",
+      "prediction_latex": "\\hat{y}(x) = \\text{mode}\\left(\\{T_b(x)\\}_{b=1}^B\\right)",
+      "description": "Aggregates 50 deep decision trees trained on bootstrap samples to suppress variance.",
+      "dataset": "Addis Ababa Road Traffic Accident (Accident_severity)"
+    },
+    {
+      "id": "clf_10",
+      "name": "Multi-Layer Perceptron (MLP Neural Net)",
+      "track": "Classification",
+      "number": 10,
+      "rank": 6,
+      "best_params": "{'hidden_layer_sizes': (128, 64), 'activation': 'relu', 'alpha': 0.0001}",
+      "metrics": {
+        "Accuracy": 0.8413,
+        "Precision (w)": 0.7497,
+        "Recall (w)": 0.8413,
+        "F1-Score (w)": 0.7766,
+        "ROC-AUC (OvR)": 0.5918,
+        "Fit Time (s)": 3.35
+      },
+      "loss_function_name": "Multi-Class Cross-Entropy with L2 Weight Decay",
+      "loss_latex": "J(W, b) = -\\frac{1}{n}\\sum_{i=1}^n \\sum_{c=1}^C y_{ic}\\log \\hat{y}_{ic} + \\frac{\\alpha}{2n}\\sum_{l=1}^L \\|W^{[l]}\\|_F^2",
+      "prediction_function_name": "Deep Forward Propagation + Softmax",
+      "prediction_latex": "a^{[l]} = \\text{ReLU}(W^{[l]} a^{[l-1]} + b^{[l]}), \\quad \\hat{y} = \\arg\\max_c \\text{softmax}(W^{[L]} a^{[L-1]} + b^{[L]})_c",
+      "description": "Deep artificial neural network with 128 and 64 hidden neurons trained via Adam optimizer.",
+      "dataset": "Addis Ababa Road Traffic Accident (Accident_severity)"
+    },
+    {
+      "id": "clu_1",
+      "name": "K-Means Clustering",
+      "track": "Clustering",
+      "number": 1,
+      "rank": 1,
+      "best_params": "{'n_clusters': 8, 'init': 'k-means++', 'n_init': 10}",
+      "metrics": {
+        "Silhouette Score": 0.2278,
+        "Davies-Bouldin Index": 1.1305,
+        "Calinski-Harabasz Index": 228.52,
+        "Post-Hoc ARI vs App": -0.0012,
+        "Post-Hoc NMI vs App": 0.0087
+      },
+      "loss_function_name": "Inertia / Within-Cluster Sum of Squares (WCSS)",
+      "loss_latex": "J(C) = \\sum_{k=1}^K \\sum_{i \\in C_k} \\|x_i - \\mu_k\\|_2^2, \\quad \\mu_k = \\frac{1}{|C_k|}\\sum_{i \\in C_k} x_i",
+      "prediction_function_name": "Voronoi Nearest Centroid Assignment",
+      "prediction_latex": "c(x) = \\arg\\min_{k \\in \\{1 \\dots K\\}} \\|x - \\mu_k\\|_2",
+      "description": "Optimal k=8 determined via Elbow Method and Silhouette global peak. Partitions 4D engagement metrics.",
+      "dataset": "Social Media Usage Dataset (social_media_usage.csv)"
+    },
+    {
+      "id": "clu_2",
+      "name": "Agglomerative Hierarchical Clustering",
+      "track": "Clustering",
+      "number": 2,
+      "rank": 2,
+      "best_params": "{'n_clusters': 8, 'linkage': 'ward', 'metric': 'euclidean'}",
+      "metrics": {
+        "Silhouette Score": 0.1596,
+        "Davies-Bouldin Index": 1.4051,
+        "Calinski-Harabasz Index": 173.16,
+        "Post-Hoc ARI vs App": 0.0019,
+        "Post-Hoc NMI vs App": 0.0136
+      },
+      "loss_function_name": "Ward's Minimum Variance Objective (Delta Error Sum of Squares)",
+      "loss_latex": "\\Delta \\text{ESS}(A, B) = \\frac{|A|\\cdot|B|}{|A| + |B|} \\|\\mu_A - \\mu_B\\|_2^2",
+      "prediction_function_name": "Dendrogram Subtree Partition Cut",
+      "prediction_latex": "c(x) = \\text{LeafSubtreeCut}(Dendrogram, h=7.0)",
+      "description": "Bottom-up agglomeration using Ward linkage. Evaluated against complete, average, and single linkages.",
+      "dataset": "Social Media Usage Dataset (social_media_usage.csv)"
+    }
+  ]
+}
