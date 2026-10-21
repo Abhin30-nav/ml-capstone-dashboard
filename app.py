@@ -2,6 +2,21 @@ import joblib
 import numpy as np
 import pandas as pd
 import streamlit as st
+import os
+import urllib.request
+
+# Automatically download all model pickle files from your GitHub Release if missing or tiny LFS pointers
+model_files = [
+    'regression_models.pkl',
+    'classification_models.pkl',
+    'clustering_models.pkl',
+]
+
+for filename in model_files:
+  if not os.path.exists(filename) or (os.path.getsize(filename) < 1000000):
+    url = f'https://github.com/Abhin30-nav/ml-capstone-dashboard/releases/download/v1.0/{filename}'
+    print(f'Downloading {filename} from GitHub Release...')
+    urllib.request.urlretrieve(url, filename)
 
 st.set_page_config(
     page_title="ML Capstone Master Dashboard", page_icon="🎓", layout="wide"
